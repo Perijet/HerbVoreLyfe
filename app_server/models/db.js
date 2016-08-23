@@ -4,7 +4,7 @@ var gracefulShutdown;
 //Assign mongoose URI to variable
 var dbURI = 'mongodb://localhost/HerbVoreLyfe';
 if (process.env.NODE_ENV === 'production') {
-    dbURI = 'mongodb://heroku_5h11fxck:9pul3370jrc4vq6vj4lhfiuqtr@ds013956.mlab.com:13956/heroku_5h11fxck;'
+    dbURI = process.env.MONGOLAB_URI;
 }
 mongoose.connect(dbURI);
 
