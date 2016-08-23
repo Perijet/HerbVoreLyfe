@@ -1,68 +1,27 @@
 extends layout
 
+include _includes/sharedHTMLfunctions
+
 block content
   #banner.page-header
     .row
       .col-lg-6
-        h3 HerbVoreLyfe
-          small &nbsp; Find vegan friendly eating establishments near you!
+        h3= pageHeader.title
+          small &nbsp; #{pageHeader.strapline}
 
-  .row
+  .row  
     .col-xs-12.col-sm-12
       .row.list-group
+      each location in locations  
         .col-xs-12.list-group-item
           h4
-            a(href="/locations") Vegan World
+            a(href="/location")= location.name
             small &nbsp;
-              span.glyphicon.glyphicon-star
-              span.glyphicon.glyphicon-star
-              span.glyphicon.glyphicon-star
-              span.glyphicon.glyphicon-star
-              span.glyphicon.glyphicon-star-empty
-            span.badge.badge-info.pull-right 100m
-          p.address 125 Elm Street, Anytown, FL 32111
+              +outputRating(location.rating)
+            span.badge.badge-info.pull-right= location.distance
+          p.address= location.address
           p
-            span.label.label-success Hot drinks
-            &nbsp;
-            span.label.label-success Food
-            &nbsp;
-            span.label.label-success wifi
-            &nbsp;
-       
-        .col-xs-12.list-group-item
-          h4
-            a(href="/locations") Health Spot
-            small &nbsp;
-              span.glyphicon.glyphicon-star
-              span.glyphicon.glyphicon-star
-              span.glyphicon.glyphicon-star
-              span.glyphicon.glyphicon-star-empty
-              span.glyphicon.glyphicon-star-empty
-            span.badge.badge-info.pull-right 100m
-          p.address 125 Elm Street, Anytown, FL 32111
-          p
-            span.label.label-success Hot drinks
-            &nbsp;
-            span.label.label-success Food
-            &nbsp;
-            span.label.label-success wifi
-            &nbsp;
-
-        .col-xs-12.list-group-item
-          h4
-            a(href="/locations") Green Town
-            small &nbsp;
-              span.glyphicon.glyphicon-star
-              span.glyphicon.glyphicon-star
-              span.glyphicon.glyphicon-star-empty
-              span.glyphicon.glyphicon-star-empty
-              span.glyphicon.glyphicon-star-empty
-            span.badge.badge-info.pull-right 100m
-          p.address 125 Elm Street, Anytown, FL 32111
-          p
-            span.label.label-success Hot drinks
-            &nbsp;
-            span.label.label-success Food
-            &nbsp;
-            span.label.label-success wifi
-            &nbsp;
+            each facility in location.facilities
+              span.label.label-success= facility
+              &nbsp;
+            
