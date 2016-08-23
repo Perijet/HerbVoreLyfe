@@ -2,10 +2,10 @@
 var mongoose 	= require('mongoose');
 var gracefulShutdown;
 //Assign mongoose URI to variable
-var dbURI 		= 'mongodb://localhost/HerbVoreLyfe' || process.env.MONGOLAB_URI;
-// if(process.env.NODE_ENV === 'production'){
-// 	dbURI = process.env.MONGOLAB_URI;
-// }
+var dbURI 		= 'mongodb://localhost/HerbVoreLyfe';
+if(process.env.NODE_ENV === 'production'){
+	dbURI = process.env.MONGOLAB_URI;
+}
 mongoose.connect(dbURI);
 
 //Used to listen for and log when mongoose is connected
@@ -53,3 +53,5 @@ process.on('SIGTERM', function(){
 		process.exit(0);
 	});
 });
+
+require('./locations');
