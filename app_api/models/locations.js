@@ -7,7 +7,7 @@ var reviewSchema = new mongoose.Schema({
 	author: String,
 	rating: {type: Number, required: true, min: 0, max: 5},
 	reviewText: String,
-	createdOn: {type: Data, "default": Date.now}
+	createdOn: {type: Date, "default": Date.now}
 });
 
 //timeSchema created and added as a subducument of the locationSchema
