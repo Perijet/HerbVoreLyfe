@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 mongoose.connect(dbURI);
 
-//Used to listen for and log when mongoose is connected
+//Used to listen for mongoose and log when mongoose is connected
 mongoose.connection.on('connected', function() {
     console.log('Mongoose connected to ' + dbURI);
 });
