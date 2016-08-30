@@ -44,11 +44,11 @@ block content
                     .well.well-sm.review-header
                       span.rating
                         +outputRating(review.rating)
-                          &nbsp; 
+                        | &nbsp; 
                       span.reviewAuthor #{review.author}
-                      &nbsp;
+                      | &nbsp;
                       small.reviewTimestamp #{review.timestamp}
-                      &nbsp;
+                      | &nbsp;
                     .col-xs-12
                       p !{(review.reviewText).replace(/\n/g, '</br>')}
                 

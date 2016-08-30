@@ -5,6 +5,7 @@ var gracefulShutdown;
 var dbURI = 'mongodb://localhost/HerbVoreLyfe';
 if (process.env.NODE_ENV === 'production') {
     dbURI = process.env.MONGOLAB_URI;
+    console.log(process.env.MONGOLAB_URI); 
 }
 mongoose.connect(dbURI);
 
