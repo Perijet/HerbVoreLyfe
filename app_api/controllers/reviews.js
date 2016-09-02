@@ -34,7 +34,7 @@ var doAddReview = function(req, res, location){
 			"message": "locationid not found"
 		});
 	}else{
-		location: reviews.push({
+		location.reviews.push({
 			author: req.body.author,
 			rating: req.body.rating,
 			reviewText: req.body.reviewText

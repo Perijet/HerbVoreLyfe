@@ -37,7 +37,7 @@ module.exports.locationsListByDistance = function(req, res){
 		maxDistance: theEarth.getRadsFromDistance(20),
 		num: 10
 	};
-	if((!lng && lng!==0) || (!lat && lat!==0)){
+	if((!lng && lng !==0) || (!lat && lat !==0)){
 		sendJsonResponse(res, 404, {
 			"message": "lng and lat query parameters are required"
 		});
@@ -125,7 +125,7 @@ module.exports.locationsUpdateOne = function(req, res){
 	}
 	Loc
 	.findById(req.params.locationid)
-	.select('-reviews -rating')
+	.select('-reviews -rating');
 	exec(
 		function(err, location){
 			if(!location){

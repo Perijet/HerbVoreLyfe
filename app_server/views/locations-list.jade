@@ -19,10 +19,10 @@ block content
             a(href="/location/#{location._id}")= location.name
             small &nbsp;
               +outputRating(location.rating)
-            span.badge.badge-info.pull-right= location.distance
+            span.badge.pull-right.badge-info= location.distance
           p.address= location.address
           p
             each facility in location.facilities
-              span.label.label-success= facility
-              &nbsp;
+              span.label.label-warning= facility
+              |&nbsp;
             

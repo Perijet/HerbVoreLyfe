@@ -10,32 +10,36 @@ block content
     .col-xs-12.col-md-12
       .row
         .col-xs-12.col-sm-6
-          p.rating
-            +outputRating(location.rating)
-          p.h5= location.address
-          each time in location.openingTimes
-              p 
-                | #{time.days}
-                if time.closed
-                  | closed
-                else
-                  | #{time.opening} - #{time.closing} 
-          each facility in location.facilities        
-              span.label.label-warning
-                span.glyphicon.glyphicon-ok
-                | &nbsp;#{facility}
-              | &nbsp;
+          .panel.location
+            .panel-heading
+              h2.panel-title Location
+            .panel-body
+              p.rating
+                +outputRating(location.rating)
+              p.h5= location.address
+              each time in location.openingTimes
+                  p 
+                    | #{time.days} &nbsp;
+                    if time.closed
+                      | closed 
+                    else
+                      | #{time.opening} - #{time.closing} 
+              each facility in location.facilities        
+                  span.label.label-warning
+                    span.glyphicon.glyphicon-leaf
+                    | &nbsp;#{facility}
+                  | &nbsp;
         .col-xs-12.col-sm-6.location-map
-          .panel
+          .panel.map
             .panel-heading
               h2.panel-title Location map
             .panel-body
-              img.img-responsive.img-rounded(src='http://maps.googleapis.com/maps/api/staticmap?center=#{location.coords.lat},#{location.coords.lng}&zoom=17&size=400x350&sensor=false&markers=#{location.coords.lat},#{location.coords.lng}&scale=2')
+              img.img-responsive.img-rounded(src='http://maps.googleapis.com/maps/api/staticmap?center=#{location.coords.lat},#{location.coords.lng}&zoom=17&size=400x350&sensor=false&markers=#{location.coords.lat},#{location.coords.lng}&scale=2&key=AIzaSyACBGtL9agAom4I1yIILfdv-qz3OD4do28')
       .row
         .col-xs-12
           .panel.panel-danger.review-panel
             .panel-heading
-              a.btn.btn-success.pull-right(href='/location/review/new') Add review
+              a.btn.btn-success.pull-right(href='/location/#{location._id}/reviews/new') Add review
               h2.panel-title Customer reviews
             .panel-body.review-container
               each review in location.reviews
@@ -46,8 +50,9 @@ block content
                         +outputRating(review.rating)
                         | &nbsp; 
                       span.reviewAuthor #{review.author}
-                      | &nbsp;
-                      small.reviewTimestamp #{review.timestamp}
+                      | &nbsp; &nbsp;
+                      small.reviewTimestamp
+                        +formatDate(review.createdOn)
                       | &nbsp;
                     .col-xs-12
                       p !{(review.reviewText).replace(/\n/g, '</br>')}

@@ -1,7 +1,7 @@
 .review {padding: 5px;
 }
 
-.panel-body.review-container{
+.panel-body .review-container{
 	padding-top: 0;
 }
 
@@ -16,6 +16,22 @@
 .reviewTimestamp{
 	color: #ccc;
 }
+
+.location{
+    min-height: 500px;
+}
+
+.map{
+    min-height: 500px;
+    overflow: hidden;
+}
+
+.img-rounded{
+    max-height: 400px;
+
+}
+
+
 
 
 html,
