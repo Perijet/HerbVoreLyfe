@@ -61,7 +61,8 @@ var renderHomepage = function(req, res, responseBody){
 var renderReviewForm = function(req, res, locDetail){
     res.render('location-review-form', {
         title: 'Review' + locDetail.name + 'on HerbVoreLyfe',
-        pageHeader: {title: 'Review' + locDetail.name}
+        pageHeader: {title: 'Review' + locDetail.name},
+        error: req.query.err
     });
 };
 
@@ -71,7 +72,7 @@ var getLocationInfo = function(req, res, callback){
     requestOptions = {
         url: apiOptions.server + path,
         method: "GET",
-        json: {},
+        json: {}
     };
     request(
         requestOptions, 
@@ -148,11 +149,11 @@ module.exports.addReview = function(req, res) {
     });
 };
 
-module.exports.doAddReview = function(req, res) {
-    var requestOptions, path, locationid, postdata;
-    locationid = req.params.locationid;
-    path = "/api/locations/" + locationid + '/reviews';
-    postdata = {
+module.exports.doAddReview = function(req, res){
+  var requestOptions, path, locationid, postdata;
+  locationid = req.params.locationid;
+  path = "/api/locations/" + locationid + '/reviews';
+  postdata = {
     author: req.body.name,
     rating: parseInt(req.body.rating, 10),
     reviewText: req.body.review
@@ -162,16 +163,21 @@ module.exports.doAddReview = function(req, res) {
     method : "POST",
     json : postdata
   };
+  if (!postdata.author || !postdata.rating || !postdata.reviewText) {
+    res.redirect('/location/' + locationid + '/reviews/new?err=val');
+  } else {
     request(
       requestOptions,
       function(err, response, body) {
-        if (response.statusCode === 201) {
+        if (response.statusCode === 200) {
           res.redirect('/location/' + locationid);
+        } else if (response.statusCode === 400 && body.name && body.name === "ValidationError" ) {
+          res.redirect('/location/' + locationid + '/reviews/new?err=val');
         } else {
           console.log(body);
           _showError(req, res, response.statusCode);
         }
       }
     );
-  
+  }
 };

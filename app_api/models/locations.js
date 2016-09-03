@@ -4,9 +4,9 @@ require('./locations');
 
 //reviewSchema created and added as a subducument of the locationSchema
 var reviewSchema = new mongoose.Schema({
-	author: String,
+	author: {type: String, required: true},
 	rating: {type: Number, required: true, min: 0, max: 5},
-	reviewText: String,
+	reviewText: {type: String, required: true},
 	createdOn: {type: Date, "default": Date.now}
 });
 

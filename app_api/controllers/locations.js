@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Loc = mongoose.model('Location');
 
 var sendJsonResponse = function(res, status, content){
-	res.status(200);
+	res.status(status);
 	res.json(content);
 };
 
@@ -47,7 +47,7 @@ module.exports.locationsListByDistance = function(req, res){
 	Loc.geoNear(point, geoOptions, function(err, results, stats){
 		var locations = [];
 		if(err){
-			sendJsonResponse(res, 404, err);
+			sendJSONResponse(res, 404, err);
 		}else{
 			results.forEach(function(doc){
 				locations.push({
@@ -86,9 +86,9 @@ module.exports.locationsCreate = function(req, res){
 
 	function(err, location){
 		if(err){
-			sendJsonResponse(res, 400, err);
+			sendJSONResponse(res, 400, err);
 		}else{
-			sendJsonResponse(res, 201, location);
+			sendJSONResponse(res, 200, location);
 		}
 	});
 };
@@ -118,7 +118,7 @@ module.exports.locationsReadOne = function(req, res){
 
 module.exports.locationsUpdateOne = function(req, res){
 	if(!req.params.locationid){
-		sendJsonResponse(res, 404, {
+		sendJSONResponse(res, 404, {
 			"message": "Not found, locationid is required"
 		});
 		return;
@@ -129,12 +129,12 @@ module.exports.locationsUpdateOne = function(req, res){
 	exec(
 		function(err, location){
 			if(!location){
-				sendJsonResponse(res, 404, {
+				sendJSONResponse(res, 404, {
 					"message": "locationid not found"
 				});
 				return;
 			}else if(err){
-				sendJsonResponse(res, 400, err);
+				sendJSONResponse(res, 400, err);
 				return;
 			}
 			location.name = req.body.name;
@@ -155,9 +155,9 @@ module.exports.locationsUpdateOne = function(req, res){
 			}];
 			location.save(function(err, location){
 				if(err){
-					sendJsonResponse(res, 404, err);
+					sendJSONResponse(res, 404, err);
 				}else{
-					sendJsonResponse(res, 200, location);
+					sendJSONResponse(res, 200, location);
 				}
 			});
 	});
