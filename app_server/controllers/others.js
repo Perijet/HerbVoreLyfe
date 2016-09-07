@@ -6,6 +6,6 @@ module.exports.about = function(req, res) {
   	 });
 };
 
-module.exports.start = function(req, res) {
-  res.render('index', { title: 'Start' });
+module.exports.angularApp = function(req, res) {
+  res.render('layout', { title: 'HerbVoreLyfe' });
 };

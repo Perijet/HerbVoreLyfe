@@ -2,9 +2,30 @@ var request = require('request');
 var apiOptions = {
     server: "http://localhost:3000"
 };
+
 if(process.env.NODE_ENV === 'production'){
     apiOptions.server = "https://murmuring-ocean-31109.herokuapp.com";
 }
+
+// var _isNumeric = function (n) {
+//   return !isNaN(parseFloat(n)) && isFinite(n);
+// };
+
+// var _formatDistance = function (distance) {
+//   var numDistance, unit;
+//   if (distance && _isNumeric(distance)) {
+//     if (distance > 1) {
+//       numDistance = parseFloat(distance/100).toFixed(1);
+//       unit = 'km';
+//     } else {
+//       numDistance = parseInt(distance,10);
+//       unit = 'm';
+//     }
+//     return numDistance + unit;
+//   } else {
+//     return "?";
+//   }
+// };
 
 var _showError = function(req, res, status){
     var title, content;
@@ -25,108 +46,51 @@ var _showError = function(req, res, status){
   });
 };
 
-var _formatDistance = function(distance){
-    console.log(distance);
-    var numDistance, unit;
-    if(distance > 1){
-        numDistance = parseFloat(distance).toFixed(3);
-        unit = 'mi';
-    }else{
-        numDistance =  parseInt(distance * 1760, 10);
-        unit = 'yds';
-    }
-    return numDistance + unit;
-};
-
 var renderHomepage = function(req, res, responseBody){
-    var message;
-    if(!(responseBody instanceof Array)){
-        message = "API lookup error";
-        responseBody = [];
-    }else{
-        if(!responseBody.length){
-            message = "No places found nearby";
-        }
-    }
-    res.render('locations-list', { 
-        title: 'HerbVoreLyfe - Find vegan/vegetarian eating options near your location!!',
-        pageHeader: {title: 'HerbVoreLyfe', 
-        strapline: 'Find vegan/vegetarian eating options near your location!'
-        },
-        locations:responseBody, 
-        message: message
-    });
-};
-
-var renderReviewForm = function(req, res, locDetail){
-    res.render('location-review-form', {
-        title: 'Review' + locDetail.name + 'on HerbVoreLyfe',
-        pageHeader: {title: 'Review' + locDetail.name},
-        error: req.query.err
-    });
-};
-
-var getLocationInfo = function(req, res, callback){
-    var requestOptions, path;
-    path = "/api/locations/" + req.params.locationid;
-    requestOptions = {
-        url: apiOptions.server + path,
-        method: "GET",
-        json: {}
-    };
-    request(
-        requestOptions, 
-        function(err, response, body){
-            var data = body;
-            if(response.statusCode === 200){
-            data.coords = {
-                lng: body.coords[0],
-                lat: body.coords[1]
-            };
-            console.log(body);
-            callback(req, res, data);
-            }else{
-                _showError(req, res, response.statusCode);
-            }
-        });
+    res.render('locations-list', {
+    title: 'HerbVoreLyfe - find vegan/vegeterian food at your current location',
+    pageHeader: {
+      title: 'HerbVoreLyfe',
+      strapline: 'Find vegan/vegeterian food at your current location!'
+    },
+    sidebar: ""
+   });
 };
 
 /* GET 'home' page */
 module.exports.homelist = function(req, res) {
-    var requestOptions, path;
-    path ='/api/locations';
-    requestOptions = {
-        url: apiOptions.server + path,
-        method: "get",
-        json: {},
-        qs: {
-            lng: -81.1972750,
-            lat: 28.6068900,
-            maxDistance: 20
-        }
-    };
-    request(
-        requestOptions,
-        function(err, response, body){
-            var i, data;
-            data = body;
-            if(response.statusCode === 200 && data.length){
-                for (i = 0; i < data.length; i++){
-                    data[i].distance = _formatDistance(data[i].distance);
-                }
-            }
-           renderHomepage(req, res, data); 
-       });
+    renderHomepage(req, res); 
 };
 
+var getLocationInfo = function (req, res, callback) {
+  var requestOptions, path;
+  path = "/api/locations/" + req.params.locationid;
+  requestOptions = {
+    url : apiOptions.server + path,
+    method : "GET",
+    json : {}
+  };
+  request(
+    requestOptions,
+    function(err, response, body) {
+      var data = body;
+      if (response.statusCode === 200) {
+        data.coords = {
+          lng : body.coords[0],
+          lat : body.coords[1]
+        };
+        callback(req, res, data);
+      } else {
+        _showError(req, res, response.statusCode);
+      }
+    }
+  );
+};
 
-
-var renderDetailsPage = function(req, res, locDetail){
+var renderDetailPage = function(req, res, locDetail){
     res.render('location-info', {
         title: locDetail.name,
-        pageHeader: {
-            title: locDetail.name
-        },
+        pageHeader: {title: locDetail.name},
         sidebar: {
             context: 'is on HerbVoreLyfe because it has accessible wifi and space to sit down with your laptop and get some work done.',
             callToAction: 'If you\'ve been and you like it - or if you don\'t - please leave a review to help other people just like you.'
@@ -138,8 +102,17 @@ var renderDetailsPage = function(req, res, locDetail){
 /* GET 'Location onformation' page */
 module.exports.locationInfo = function(req, res) {
     getLocationInfo(req, res, function(req, res, responseData){
-        renderDetailsPage(req, res, responseData);
+        renderDetailPage(req, res, responseData);
     });   
+};
+
+var renderReviewForm = function(req, res, locDetail){
+    res.render('location-review-form', {
+        title: 'Review' + locDetail.name + 'on HerbVoreLyfe',
+        pageHeader: {title: 'Review' + locDetail.name},
+        error: req.query.err,
+        url: req.originalUrl
+    });
 };
 
 /* GET 'Add review' page */

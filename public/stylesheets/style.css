@@ -66,6 +66,15 @@ img {
 .blockquote-footer {
     margin: 1rem 0 0;
 }
+
+#filter{
+    margin-left: 4px;
+    margin-bottom: 15px;
+}
+
+#facility{
+    margin-left: 4px;
+}
  
  
 .stage {
