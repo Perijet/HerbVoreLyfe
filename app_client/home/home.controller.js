@@ -4,6 +4,7 @@ angular
     .module('herbVoreLyfeApp')
     .controller('homeCtrl', homeCtrl);
 
+homeCtrl.$inject = ['$scope', 'herbVoreLyfeData', 'geolocation'];
 function homeCtrl($scope, herbVoreLyfeData, geolocation){
 	var vm = this;
 	vm.pageHeader = {
