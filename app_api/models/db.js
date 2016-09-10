@@ -3,10 +3,10 @@ var mongoose = require('mongoose');
 var gracefulShutdown;
 //Assign mongoose URI to variable
 var dbURI = "mongodb://heroku_5h11fxck:9pul3370jrc4vq6vj4lhfiuqtr@ds013956.mlab.com:13956/heroku_5h11fxck";
-if (process.env.NODE_ENV === 'production') {
-    dbURI = process.env.MONGOLAB_URI;
-    console.log(process.env.MONGOLAB_URI); 
-}
+// if (process.env.NODE_ENV === 'production') {
+//     dbURI = process.env.MONGOLAB_URI;
+//     console.log(process.env.MONGOLAB_URI); 
+// }
 mongoose.connect(dbURI);
 
 console.log('dbURI is', dbURI);
