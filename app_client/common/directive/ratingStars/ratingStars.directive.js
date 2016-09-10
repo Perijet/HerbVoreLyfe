@@ -1,7 +1,7 @@
 (function () {
 
 angular
-    .module('loc8rApp')
+    .module('herbVoreLyfeApp')
     .directive('ratingStars', ratingStars);
 
   function ratingStars () {
@@ -10,7 +10,7 @@ angular
       scope: {
         thisRating : '=rating'
       },
-      templateUrl: '/common/directives/ratingStars/ratingStars.template.html'
+      templateUrl: '/common/directive/ratingStars/ratingStars.template.html'
     };
   }
 

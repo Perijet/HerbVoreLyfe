@@ -75,7 +75,59 @@ img {
 #facility{
     margin-left: 4px;
 }
- 
+
+#facility2{
+    margin-left: 4px;
+}
+
+#listings{
+    margin-bottom: 2px;
+}
+
+.social a i{
+   display:inline-block;
+   width:25px;
+   height:25px;
+   font-size:15px;
+   line-height:25px;
+   text-decoration:none;
+   text-align:center;
+   color:#fff;
+   -webkit-transition: all 1.5s ease;
+   -moz-transition: all 1.5s ease;
+   -ms-transition: all 1.5s ease;
+   -o-transition: all 1.5s ease;
+   transition: all 1.5s ease;
+}
+
+.social a.facebook i{
+    background:#1e78ae;
+    border-radius: 25px;
+}
+
+.social a.twitter i{
+    background:#1ba1e2;
+    border-radius: 25px;
+}
+
+.social a.google-plus i{
+    background:#f22d0c;
+    border-radius: 25px;
+}
+
+.social a.linkedin i{
+    background:#2d93cf;
+    border-radius: 25px;
+}
+
+.social a.pinterest i{
+    background:#dd1617;
+    border-radius: 25px;
+}
+
+.social a:hover i{
+   background:#000;
+}
  
 .stage {
     background: url('../images/scene.jpeg') center center no-repeat;
