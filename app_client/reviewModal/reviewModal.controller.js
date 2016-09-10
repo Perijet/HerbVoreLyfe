@@ -38,9 +38,9 @@
     };
 
     vm.modal = {
-      close : function (formData) {
-        $uibModalInstance.close(formData);
-        console.log('reviewModal.controller - close', formData);
+      close : function (data) {
+        $uibModalInstance.close(data);
+        console.log('reviewModal.controller - close', data);
       },
       cancel : function () {
         $uibModalInstance.dismiss('cancel');

@@ -37,7 +37,7 @@
 
       uibModalInstance.result.then(function (data) {
         vm.data.location.reviews.push(data);
-        console.log('Me is new', data);
+        console.log('location details controller - vm.data.location.reviews.push(data) ', data);
       });
     };
 

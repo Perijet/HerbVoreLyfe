@@ -44,6 +44,7 @@ var doAddReview = function(req, res, location) {
       } else {
         updateAverageRating(location._id);
         thisReview = location.reviews[location.reviews.length - 1];
+        console.log('this is', thisReview)
         sendJSONresponse(res, 201, thisReview);
       }
     });

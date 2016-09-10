@@ -17,7 +17,7 @@ function herbVoreLyfeData ($http) {
     var addReviewById = function(locationid, data){
       console.log('herbVoreLyfeData.services.js - addReviewById - data', data);
       console.log('herbVoreLyfeData.services.js - addReviewById - locationid', locationid);
-      return $http.post('/api/locations' + locationid + '/reviews', data);
+      return $http.post('/api/locations/' + locationid + '/reviews', data);
     };
 
     return {
