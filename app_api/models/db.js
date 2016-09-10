@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 var gracefulShutdown;
 //Assign mongoose URI to variable
-var dbURI = 'mongodb://localhost/HerbVoreLyfe';
+var dbURI = process.env.MONGOLAB_URI;
 if (process.env.NODE_ENV === 'production') {
     dbURI = process.env.MONGOLAB_URI;
     console.log(process.env.MONGOLAB_URI); 
