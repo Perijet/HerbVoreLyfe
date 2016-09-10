@@ -1,6 +1,6 @@
 (function () {
 
-angular.module('herbVoreLyfeApp', ['ngRoute', 'ngSanitize', 'ngResource', 'ui.bootstrap']);
+angular.module('herbVoreLyfeApp', ['ngRoute', 'ngSanitize', 'ui.bootstrap']);
 
 function config($routeProvider, $locationProvider){
 	$routeProvider
