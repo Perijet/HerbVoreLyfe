@@ -36,6 +36,8 @@ var appClientFiles = [
 ];
 var uglified = uglifyJs.minify(appClientFiles, { compress : false });
 
+console.log('uglified.code is', uglified.code);
+
 fs.writeFile('public/angular/herbVoreLyfe.min.js', uglified.code, function (err){
   if(err) {
     console.log(err);
