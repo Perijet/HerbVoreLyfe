@@ -43,7 +43,9 @@
         <div class="row">
           <div class="col-xs-12">
             <div class="panel panel-danger review-panel">
-              <div class="panel-heading"><a ng-click="vm.popupReviewForm()" class="btn btn-success pull-right">Add review</a>
+              <div class="panel-heading">
+              <a ng-show="vm.isLoggedIn" ng-click="vm.popupReviewForm()" class="btn btn-default pull-right">Add review</a>
+              <a ng-hide="vm.isLoggedIn" href="/#/login?page={{ vm.currentPath }}" class="btn btn-default pull-right">Login to add review</a>
                 <h2 class="panel-title">Customer reviews</h2>
               </div>
               <div class="panel-body review-container">
@@ -53,9 +55,10 @@
                       <span class="rating" rating-stars rating="review.rating"></span>
                       <span class="reviewAuthor">{{ review.author }}</span>
                       <small class="reviewTimestamp">{{ review.createdOn | date : 'd MMMM yyyy' }}</small>
+                      <p ng-bind-html="review.reviewText | addHtmlLineBreaks"></p>
                     </div>
                     <div class="col-xs-12">
-                      <p ng-bind-html="review.reviewText | addHtmlLineBreaks"></p>
+                      <!-- <p ng-bind-html="review.reviewText | addHtmlLineBreaks"></p> -->
                     </div>
                   </div>
                 </div>

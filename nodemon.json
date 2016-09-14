@@ -1,4 +1,5 @@
 {
 	"verbose": true,
-	"ignore": ["public/*"]
+	"ignore": ["public/*"],
+	"ext": "js json css styl jade"
 }

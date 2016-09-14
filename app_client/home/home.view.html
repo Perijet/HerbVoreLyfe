@@ -8,6 +8,7 @@
       <label for="filter">Filter results</label>
       <input id="filter" type="text", name="filter", ng-model="textFilter">
       <div class="error">{{ vm.message }}</div>
+      
       <div class="row list-group">
         <div id="listings" class="col-xs-12 list-group-item" ng-repeat="location in vm.data.locations | filter : textFilter">
           <h4>
@@ -22,6 +23,9 @@
             </span>
           </p>
         </div>
+        <div class="progress progress-striped active", ng-hide="location">
+        <div class="progress-bar" style="width: 80%"></div>
+      </div>
       </div>
     </div>
     

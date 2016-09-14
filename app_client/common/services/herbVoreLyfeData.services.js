@@ -4,8 +4,8 @@ angular
 	.module('herbVoreLyfeApp')
 	.service('herbVoreLyfeData', herbVoreLyfeData);
 
-herbVoreLyfeData.$inject = ['$http'];
-function herbVoreLyfeData ($http) {
+herbVoreLyfeData.$inject = ['$http', 'authentication'];
+function herbVoreLyfeData ($http, authentication) {
     var locationByCoords = function (lat, lng) {
       return $http.get('/api/locations?lng=' + lng + '&lat=' + lat + '&maxDistance=200000000000');
     };
@@ -17,7 +17,12 @@ function herbVoreLyfeData ($http) {
     var addReviewById = function(locationid, data){
       console.log('herbVoreLyfeData.services.js - addReviewById - data', data);
       console.log('herbVoreLyfeData.services.js - addReviewById - locationid', locationid);
-      return $http.post('/api/locations/' + locationid + '/reviews', data);
+      console.log(authentication.getToken());
+      return $http.post('/api/locations/' + locationid + '/reviews', data, {
+        headers: {
+          Authorization: 'Bearer '+ authentication.getToken()
+        }
+      });
     };
 
     return {

@@ -1,39 +1,70 @@
 var mongoose = require('mongoose');
 var Loc = mongoose.model('Location');
+var User = mongoose.model('User');
 
 var sendJSONresponse = function(res, status, content){
-	res.status(200);
+	res.status(status);
 	res.json(content);
 };
 
 
 module.exports.reviewsCreate = function(req, res){
-	var locationid = req.params.locationid;
-	if(locationid){
-		Loc
-		.findById(locationid)
-		.select('reviews')
-		.exec(
-			function(err, location){
-				if(err){
-					sendJSONresponse(res, 400, err);
-				}else{
-					doAddReview(req, res, location);
-				}
-			});
-	}else{
-		sendJSONresponse(res, 404, {
-			"message": "Not found, location required"
-		});
-	}
+  getAuthor(req, res, function(req, res, userName){
+  	if(req.params.locationid){
+  		Loc
+  		.findById(req.params.locationid)
+  		.select('reviews')
+  		.exec(
+  			function(err, location){
+  				if(err){
+  					sendJSONresponse(res, 400, err);
+  				}else{
+  					doAddReview(req, res, location, userName);
+  				}
+  			});
+  	}else{
+  		sendJSONresponse(res, 404, {
+  			"message": "Not found, location required"
+  		});
+  	}
+  });
 };
 
-var doAddReview = function(req, res, location) {
+var getAuthor = function(req, res, callback) {
+  console.log("Finding author with email " + req.payload.email);
+  if (req.payload.email) {
+    User
+      .findOne({ email : req.payload.email })
+      .exec(function(err, user) {
+        if (!user) {
+          sendJSONresponse(res, 404, {
+            "message": "User not found"
+          });
+          return;
+        } else if (err) {
+          console.log(err);
+          sendJSONresponse(res, 404, err);
+          return;
+        }
+        console.log(user);
+        callback(req, res, user.name);
+      });
+
+  } else {
+    sendJSONresponse(res, 404, {
+      "message": "User not found"
+    });
+    return;
+  }
+
+};
+
+var doAddReview = function(req, res, location, author) {
   if (!location) {
     sendJSONresponse(res, 404, "locationid not found");
   } else {
     location.reviews.push({
-      author: req.body.author,
+      author: author,
       rating: req.body.rating,
       reviewText: req.body.reviewText
     });
@@ -44,7 +75,7 @@ var doAddReview = function(req, res, location) {
       } else {
         updateAverageRating(location._id);
         thisReview = location.reviews[location.reviews.length - 1];
-        console.log('this is', thisReview)
+        console.log('this is', thisReview);
         sendJSONresponse(res, 201, thisReview);
       }
     });

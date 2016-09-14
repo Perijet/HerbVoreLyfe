@@ -4,10 +4,14 @@
     .module('herbVoreLyfeApp')
     .controller('locationDetailCtrl', locationDetailCtrl);
 
-  locationDetailCtrl.$inject = ['$routeParams', '$uibModal', 'herbVoreLyfeData'];
-  function locationDetailCtrl ($routeParams, $uibModal, herbVoreLyfeData) {
+  locationDetailCtrl.$inject = ['$routeParams', '$location', '$uibModal', 'herbVoreLyfeData', 'authentication'];
+  function locationDetailCtrl ($routeParams, $location, $uibModal, herbVoreLyfeData, authentication) {
     var vm = this;
     vm.locationid = $routeParams.locationid;
+
+    vm.isLoggedIn = authentication.isLoggedIn();
+
+    vm.currentPath = $location.path();
 
     herbVoreLyfeData.locationById(vm.locationid)
       .success(function(data) {
